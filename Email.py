@@ -15,8 +15,8 @@ from email.parser import Parser
 from email.utils import parseaddr, formataddr
 
 import EmailDecoder
-from Decorator import decrypt_params
-from DesCode import decrypt_helper
+# from Decorator import decrypt_params
+# from DesCode import decrypt_helper
 from logHandler import logger
 
 
@@ -199,9 +199,9 @@ def send(account, passwd, to, subject, content, server,
         msg['Subject'] = Header(subject, 'utf-8').encode()
 
         # 补充一个 DATE 的字段 @http://121.33.214.30:28888/pro/task-view-236.html
-        now = datetime.datetime.now()
-        formatted_time = now.strftime('%a, %d %b %Y %H:%M:%S +0800')
-        msg['Date'] = formatted_time
+        # now = datetime.datetime.now()
+        # formatted_time = now.strftime('%a, %d %b %Y %H:%M:%S +0800')
+        # msg['Date'] = formatted_time
         
         if isinstance(to, list):
             msg['To'] = ','.join(to)
@@ -218,9 +218,9 @@ def send(account, passwd, to, subject, content, server,
                 msg['Bcc'] = bcc
 
         if isSSL:
-            sev = smtplib.SMTP_SSL(server, port)
+            sev = smtplib.SMTP_SSL(server1, port)
         else:
-            sev = smtplib.SMTP(server, port)
+            sev = smtplib.SMTP(server1, port)
         # sev.set_debuglevel(1)
         sev.login(account, passwd)
         if isinstance(to, list):
@@ -239,8 +239,8 @@ def send(account, passwd, to, subject, content, server,
             sev.quit()
     return suc
 
-@decrypt_params
-@decrypt_helper
+# @decrypt_params
+# @decrypt_helper
 def connect(account, passwd, server, protocol='POP3',
             port: int=110, isSSL=False, sslPort: int=995,
             timeout=30000):
